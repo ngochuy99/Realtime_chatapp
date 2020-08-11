@@ -19,30 +19,30 @@
 				</div>
 			</div>
 			<div class="card-body">
-				<form>
+				<form [formGroup] = "RegisterForm" (submit)="register()">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="Tài khoản">
+						<input type="text" class="form-control" formControlName="username" placeholder="Tài khoản">
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
-						<input type="password" class="form-control" placeholder="Mật khẩu">
+						<input type="password" class="form-control" formControlName="password" placeholder="Mật khẩu">
           </div>
           <div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
-						<input type="password" class="form-control" placeholder="Nhập lại mật khẩu">
+						<input type="password" class="form-control" formControlName="repassword" placeholder="Nhập lại mật khẩu">
           </div>
           <div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-at"></i></span>
 						</div>
-						<input type="email" class="form-control" placeholder="Email">
+						<input type="email" class="form-control" formControlName="email" placeholder="Email">
 					</div>
 					<div class="form-group">
 						<input type="submit" value="Đăng ký" class="btn float-right register-btn">
