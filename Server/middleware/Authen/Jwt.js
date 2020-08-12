@@ -2,7 +2,7 @@
 var jwt=require('jsonwebtoken');
 require('dotenv').config();
 
-let generate_token=async function(user_info,Secret_token,expiresTimes){
+let generate_token=async function(user_info,Secret_token,expiresTimes){ //Generate new token (access + refresh)
     try {
         const token = await jwt.sign(user_info,Secret_token,{expiresIn:expiresTimes});
         return token;
@@ -11,7 +11,7 @@ let generate_token=async function(user_info,Secret_token,expiresTimes){
         throw error;        
     }
 }
-let verify_access=async function(token){
+let verify_access=async function(token){ // Veryfing the provided access token
     try {
         const decoded = await jwt.verify(token,process.env.Secret_token);
         return decoded;
@@ -21,7 +21,7 @@ let verify_access=async function(token){
     }
 }
 
-let verify_refresh=async function(token){
+let verify_refresh=async function(token){   //Verrfying the refresh token
     try {
         const decoded = await jwt.verify(token,process.env.Refresh_secret);
         return decoded;
