@@ -4,10 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
-var indexRouter = require('./routes/index');
 var cors = require('cors'); 
 var UserApi = require('./routes/users');
 var db=require('./models/index.js');
+var Authenticate = require('./middleware/Authen/Auth');
 var app = express();
 
 // view engine setup
@@ -20,13 +20,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+var corsOptions = {
+  origin: 'http://localhost:4200',
+  optionsSuccessStatus: 200 
+}
+app.use(cors(corsOptions));  //Allow cors for front-end  Place this line before router.
+
 app.use('/users', UserApi);
-// app.user(Auth);
+
+app.use(Authenticate.checkAuth);  //All route below are protected by accesstoken
 
 db.sequelize.sync().then(async function(){
     console.log('model sync process finished');
 })
-app.use(cors());
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -42,7 +50,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen(process.env.PORT,function(){
+
+app.listen(process.env.PORT,function(){//Create http listener
   console.log('server is running on port '+ process.env.PORT);
 });
 module.exports = app;
