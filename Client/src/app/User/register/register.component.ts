@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserApiService } from '../../services/user-api.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -11,7 +12,7 @@ export class RegisterComponent implements OnInit {
   private password: FormControl;
   private repassword: FormControl;
   private email: FormControl;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private userapi: UserApiService) {
     this.username = new FormControl('', [Validators.required]);
     this.password = new FormControl('', [Validators.required]);
     this.repassword = new FormControl('', [Validators.required]);
@@ -27,8 +28,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
   register() {
-    console.log(this.RegisterForm.get('username').value);
-    console.log(this.RegisterForm.get('email').value);
-    console.log(this.RegisterForm.get('repassword').value);
+    const registerinfo = this.RegisterForm.value;
+    console.log(registerinfo);
+    this.userapi.register(registerinfo);
   }
 }
