@@ -11,6 +11,6 @@ export class UserApiService {
     return this.http.post(this.rooturl + '/users/login', userinfo);
   }
   register(registerinfo) {
-    return this.http.post(this.rooturl + '/users/register', registerinfo);
+    return this.http.post<any>(this.rooturl + '/users/register', registerinfo);
   }
 }

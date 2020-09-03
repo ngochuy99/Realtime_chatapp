@@ -6,10 +6,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './User/login/login.component';
 import { RegisterComponent } from './User/register/register.component';
 import { ReactiveFormsModule , FormsModule} from '@angular/forms';
-<<<<<<< HEAD
-import { CookieService} from 'ngx-cookie-service';
-
-=======
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ToolbarComponent } from './Component/toolbar/toolbar.component'
@@ -19,7 +15,8 @@ import { MatSidenavModule} from '@angular/material/sidenav';
 import { MatListModule} from '@angular/material/list'
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { fromEventPattern } from 'rxjs';
->>>>>>> origin/Chat_app_v082020
+import { CookieService} from 'ngx-cookie-service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,16 +30,14 @@ import { fromEventPattern } from 'rxjs';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-<<<<<<< HEAD
-=======
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
-    MatCheckboxModule
->>>>>>> origin/Chat_app_v082020
+    MatCheckboxModule,
+    MatSnackBarModule
   ],
   providers: [ CookieService],
   bootstrap: [AppComponent]

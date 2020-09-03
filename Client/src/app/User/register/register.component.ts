@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { UserApiService } from '../../services/user-api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -14,7 +16,7 @@ export class RegisterComponent implements OnInit {
   private repassword: FormControl;
   private email: FormControl;
 
-  constructor(private fb: FormBuilder, private userapi: UserApiService) {
+  constructor(private fb: FormBuilder, private userapi: UserApiService, private _snackbar : MatSnackBar,private router:Router) {
     this.username = new FormControl('', [Validators.required]);
     this.password = new FormControl('', [Validators.required]);
     this.repassword = new FormControl('', [Validators.required]);
@@ -39,7 +41,20 @@ export class RegisterComponent implements OnInit {
   }
   register() {
     const registerinfo = this.RegisterForm.value;
-    this.userapi.register(registerinfo).subscribe(val=>console.log(val));
+    this.userapi.register(registerinfo).subscribe((data:any)=>{
+      if(data.message==="success"){
+        this._snackbar.open("Register success","close",{
+          duration:2000,
+        }).afterDismissed().subscribe(() => {
+          this.router.navigate(['/user/login']);
+        });
+      }
+      else{
+        this._snackbar.open("Register Failed","Confirm",{
+          duration:2000
+        })
+      }
+    });
   }
 }
 
