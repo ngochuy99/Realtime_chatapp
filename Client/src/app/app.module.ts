@@ -17,6 +17,8 @@ import { MatCheckboxModule} from '@angular/material/checkbox';
 import { fromEventPattern } from 'rxjs';
 import { CookieService} from 'ngx-cookie-service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { JwtModule} from '@auth0/angular-jwt';
+import { JwtHelperService,JWT_OPTIONS} from '@auth0/angular-jwt'
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,9 +39,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSidenavModule,
     MatListModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    JwtModule
   ],
-  providers: [ CookieService],
+  providers: [ CookieService,
+            { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+            JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
