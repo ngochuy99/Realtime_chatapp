@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.cookie.set('first value' , 'Semicolon');
   }
 
   login() {
