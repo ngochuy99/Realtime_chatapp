@@ -8,10 +8,9 @@ export class UserApiService {
   private rooturl = 'http://localhost:3000';
   constructor(private http: HttpClient) { }
   login(userinfo) {
-    console.log(userinfo);
-    this.http.post(this.rooturl + '/users/login', userinfo).subscribe();
+    return this.http.post(this.rooturl + '/users/login', userinfo);
   }
   register(registerinfo) {
-    this.http.post(this.rooturl + '/users/register', registerinfo).subscribe();
+    return this.http.post(this.rooturl + '/users/register', registerinfo);
   }
 }

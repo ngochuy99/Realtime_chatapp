@@ -31,6 +31,7 @@ router.post('/login', async function(req, res) {
 
 router.post('/register',async function(req,res){
   try {
+    console.log(req.body);
     await Register(req.body);
     res.status(200).json({
       message:"success"
@@ -66,24 +67,24 @@ let hashPassword=async function(Password){  //Hash plain password to stored in d
 }
 
 let Checklogin=async function(user_info){
-  var hashPass=await hashPassword(user_info.Password);
+  var hashPass=await hashPassword(user_info.password);
     var user_info=await db.user.findAll({
       raw: true,  //Only reply with raw data
       attributes:['Name','Email'],
       where:{
-        [Op.and]:[{Username:user_info.Username},{Password:hashPass}]
+        [Op.and]:[{Username:user_info.username},{Password:hashPass}]
       }
     });
     return user_info;
 }
 
 let Register =async function(user_info){
-  var hashPass=await hashPassword(user_info.Password);
+  var hashPass=await hashPassword(user_info.password);
   await db.user.create({
-    Name:user_info.Name,
-    Username:user_info.Username,
+    Name:user_info.name,
+    Username:user_info.username,
     Password:hashPass,
-    Email:user_info.Email
+    Email:user_info.email
   });
 }
 module.exports = router;

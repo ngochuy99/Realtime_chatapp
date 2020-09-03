@@ -33,11 +33,17 @@
 						<input type="password" class="form-control" formControlName="password" placeholder="Mật khẩu">
 					</div>
 					<div class="row align-items-center remember">
-						<input type="checkbox">Nhớ tài khoản
-					</div>
+						<input type="checkbox" formControlName="rememberme">Nhớ tài khoản
+          </div>
+          <div class="error-messages">
+            <div class="error-message alert alert-danger" *ngIf="UaPCheck===false">
+              Mật khẩu không khớp
+            </div>
+          </div>
 					<div class="form-group">
 						<input type="submit" value="Đăng nhập" class="btn float-right login_btn">
-					</div>
+          </div>
+
 				</form>
 			</div>
 			<div class="card-footer">
