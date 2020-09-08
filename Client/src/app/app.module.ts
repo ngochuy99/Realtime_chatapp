@@ -18,13 +18,19 @@ import { fromEventPattern } from 'rxjs';
 import { CookieService} from 'ngx-cookie-service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JwtModule} from '@auth0/angular-jwt';
-import { JwtHelperService,JWT_OPTIONS} from '@auth0/angular-jwt'
+import { JwtHelperService,JWT_OPTIONS} from '@auth0/angular-jwt';
+import { HomepageComponent } from './Component/homepage/homepage.component'
+import {MatGridListModule} from '@angular/material/grid-list';
+import { ChatComponent } from './Function/chat/chat.component';
+import { SocketioService } from './services/socketio.service';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
     ToolbarComponent,
+    HomepageComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,11 +46,13 @@ import { JwtHelperService,JWT_OPTIONS} from '@auth0/angular-jwt'
     MatListModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    JwtModule
+    JwtModule,
+    MatGridListModule
   ],
   providers: [ CookieService,
-            { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-            JwtHelperService],
+              { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+              JwtHelperService,
+              SocketioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
