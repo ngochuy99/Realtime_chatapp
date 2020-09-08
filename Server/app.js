@@ -8,8 +8,11 @@ var cors = require('cors');
 var UserApi = require('./routes/users');
 var db=require('./models/index.js');
 var Authenticate = require('./middleware/Authen/Auth');
-var app = express();
 
+var Socket=require('./middleware/Socket_control/Socket_api');
+var app = express();
+var server = app.listen(8080||process.env.PORT);
+var io = require('socket.io').listen(server);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -20,16 +23,27 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-var corsOptions = {
-  origin: 'http://localhost:4200',
-  optionsSuccessStatus: 200 
+const whitelist = [];
+const corsOptions = {
+  credentials: true, // This is important.
+  origin: (origin, callback) => {
+    if(whitelist.includes(origin))
+      return callback(null, true)
+      callback(new Error('Not allowed by CORS'));
+  }
 }
-app.use(cors(corsOptions));  //Allow cors for front-end  Place this line before router.
+
+app.use(cors(corsOptions)); //Allow cors for front-end  Place this line before router.
 
 app.use('/users', UserApi);
 
-app.use(Authenticate.checkAuth);  //All route below are protected by accesstoken
+// app.use(Authenticate.checkAuth);  //All route below are protected by accesstoken
+// app.use('/Chat_service',Socket);
+io.on('connection',(socket)=>{
+  socket.on('disconnected',()=>{
+    console.log('a user disconnected');
+  })
+})
 
 db.sequelize.sync().then(async function(){
     console.log('model sync process finished');
@@ -51,7 +65,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(process.env.PORT,function(){//Create http listener
-  console.log('server is running on port '+ process.env.PORT);
-});
+// http.listen(process.env.PORT,function(){//Create http listener
+//   console.log('server is running on port '+ process.env.PORT);
+// });
 module.exports = app;
