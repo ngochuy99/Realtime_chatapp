@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
     </button>
-    <span>メッセージアプリ</span>
+    <button mat-button (click)="returnHomepage()">メッセージアプリ</button>
 </mat-toolbar>
 
 <mat-sidenav-container class="main-sidenav-container">
@@ -14,5 +14,6 @@
             <a mat-list-item routerLink="." >三</a>
         </mat-nav-list>
     </mat-sidenav>
+    <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content>
 </mat-sidenav-container>
 </div>

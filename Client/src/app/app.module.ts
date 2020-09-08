@@ -14,7 +14,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatSidenavModule} from '@angular/material/sidenav';
 import { MatListModule} from '@angular/material/list'
 import { MatCheckboxModule} from '@angular/material/checkbox';
-import { fromEventPattern } from 'rxjs';
+import { fromEventPattern, from } from 'rxjs';
 import { CookieService} from 'ngx-cookie-service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JwtModule} from '@auth0/angular-jwt';
@@ -23,6 +23,7 @@ import { HomepageComponent } from './Component/homepage/homepage.component'
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ChatComponent } from './Function/chat/chat.component';
 import { SocketioService } from './services/socketio.service';
+import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { SocketioService } from './services/socketio.service';
     MatCheckboxModule,
     MatSnackBarModule,
     JwtModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule
   ],
   providers: [ CookieService,
               { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

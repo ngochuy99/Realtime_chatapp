@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
         this._snackbar.open("Login success","Close",{
           duration:3000
         }).afterDismissed().subscribe(()=>{
-          this.router.navigate(['/']);
+          this.router.navigate(['/homepage']);
         })
       },
       error => {
