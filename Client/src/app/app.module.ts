@@ -23,7 +23,10 @@ import { HomepageComponent } from './Component/homepage/homepage.component'
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ChatComponent } from './Function/chat/chat.component';
 import { SocketioService } from './services/socketio.service';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CreateRoomDialogComponent } from './Modals/create-room-dialog/create-room-dialog.component';
+import { MatFormFieldModule} from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +35,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     ToolbarComponent,
     HomepageComponent,
     ChatComponent,
+    CreateRoomDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,8 +53,11 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatSnackBarModule,
     JwtModule,
     MatGridListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
+  entryComponents: [CreateRoomDialogComponent],
   providers: [ CookieService,
               { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
               JwtHelperService,
