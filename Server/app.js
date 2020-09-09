@@ -8,11 +8,10 @@ var cors = require('cors');
 var UserApi = require('./routes/users');
 var db=require('./models/index.js');
 var Authenticate = require('./middleware/Authen/Auth');
-
-var Socket=require('./middleware/Socket_control/Socket_api');
 var app = express();
-var server = app.listen(8080||process.env.PORT);
+var server = app.listen(process.env.PORT);
 var io = require('socket.io').listen(server);
+const Socket_api = require('./middleware/Socket_control/Socket_api')(io);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -37,13 +36,8 @@ app.use(cors(corsOptions)); //Allow cors for front-end  Place this line before r
 
 app.use('/users', UserApi);
 
-// app.use(Authenticate.checkAuth);  //All route below are protected by accesstoken
-// app.use('/Chat_service',Socket);
-io.on('connection',(socket)=>{
-  socket.on('disconnected',()=>{
-    console.log('a user disconnected');
-  })
-})
+app.use(Authenticate.checkAuth);  //All route below are protected by accesstoken
+
 
 db.sequelize.sync().then(async function(){
     console.log('model sync process finished');

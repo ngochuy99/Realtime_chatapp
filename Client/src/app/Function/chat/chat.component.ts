@@ -1,8 +1,9 @@
 import { Component, OnInit ,Inject} from '@angular/core';
 import { SocketioService } from 'src/app/services/socketio.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
 import { CreateRoomDialogComponent } from 'src/app/Modals/create-room-dialog/create-room-dialog.component';
 import { CookieService } from 'ngx-cookie-service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-chat',
@@ -10,7 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  constructor(private socketService:SocketioService,public dialog: MatDialog, private cookie:CookieService) { }
+  constructor(private _snack:MatSnackBar,private socketService:SocketioService,public dialog: MatDialog, private cookie:CookieService) { }
   room:string;
   ngOnInit() {
     this.socketService.setupSocketConnection();
@@ -24,6 +25,16 @@ export class ChatComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result:any)=>{
         this.socketService.create_room(result.room,result.password);
+        this.socketService.socket.on('join_success',()=>{
+          this._snack.open('Tạo phòng thành công','close',{
+            duration:3000
+          })
+        })
+        this.socketService.socket.on('alr_exist',()=>{
+          this._snack.open('Phòng đã tồn tại ','close',{
+            duration:3000
+          })
+        })
     })
   }
 }

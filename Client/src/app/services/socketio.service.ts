@@ -8,7 +8,10 @@ import { environment } from 'src/environments/environment';
 export class SocketioService {
   socket;
   constructor() { }
-  setupSocketConnection(){
+  setupSocketConnection(){ //init connection
     this.socket=io.connect(environment.SOCKET_ENDPOINT);
+  }
+  create_room(room:string,password:string){ //Create new room
+    this.socket.emit('create_room',room,password);
   }
 }

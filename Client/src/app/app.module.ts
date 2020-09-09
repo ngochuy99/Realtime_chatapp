@@ -27,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CreateRoomDialogComponent } from './Modals/create-room-dialog/create-room-dialog.component';
 import { MatFormFieldModule} from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +56,8 @@ import { MatInputModule } from '@angular/material/input';
     MatGridListModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTooltipModule
   ],
   entryComponents: [CreateRoomDialogComponent],
   providers: [ CookieService,
