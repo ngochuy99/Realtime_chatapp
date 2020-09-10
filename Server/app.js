@@ -22,14 +22,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const whitelist = [];
+
 const corsOptions = {
   credentials: true, // This is important.
-  origin: (origin, callback) => {
-    if(whitelist.includes(origin))
-      return callback(null, true)
-      callback(new Error('Not allowed by CORS'));
-  }
 }
 
 app.use(cors(corsOptions)); //Allow cors for front-end  Place this line before router.
