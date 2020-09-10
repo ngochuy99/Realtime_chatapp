@@ -4,6 +4,7 @@ import { MatDialog} from '@angular/material/dialog';
 import { CreateRoomDialogComponent } from 'src/app/Modals/create-room-dialog/create-room-dialog.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { JoinRoomDialogComponent } from 'src/app/Modals/join-room-dialog/join-room-dialog.component';
 
 @Component({
   selector: 'app-chat',
@@ -24,7 +25,7 @@ export class ChatComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((result:any)=>{
-        this.socketService.create_room(result.room,result.password);
+        this.socketService.create_room(result.room,result.password,this.cookie.get('UID'));
         this.socketService.socket.on('join_success',()=>{
           this._snack.open('Tạo phòng thành công','close',{
             duration:3000

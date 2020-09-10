@@ -11,7 +11,7 @@ export class SocketioService {
   setupSocketConnection(){ //init connection
     this.socket=io.connect(environment.SOCKET_ENDPOINT);
   }
-  create_room(room:string,password:string){ //Create new room
-    this.socket.emit('create_room',room,password);
+  create_room(room:string,password:string,uid){ //Create new room
+    this.socket.emit('create_room',room,password,uid);
   }
 }

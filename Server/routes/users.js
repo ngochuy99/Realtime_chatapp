@@ -15,6 +15,7 @@ router.post('/login', async function(req, res) {
     var refreshToken=await jwt.generate_token(user_info[0],process.env.Refresh_secret,process.env.refreshexpiresTimes);
 
     res.status(200).json({
+      UID:user_info[0].ID,
       Name:user_info[0].Name,
       Email:user_info[0].Email,
       accessToken:accessToken,
@@ -69,7 +70,7 @@ let Checklogin=async function(user_info){
   var hashPass=await hashPassword(user_info.password);
     var user_info=await db.user.findAll({
       raw: true,  //Only reply with raw data
-      attributes:['Name','Email'],
+      attributes:['ID','Name','Email'],
       where:{
         [Op.and]:[{Username:user_info.username},{Password:hashPass}]
       }

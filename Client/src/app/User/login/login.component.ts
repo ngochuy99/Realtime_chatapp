@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         //Store access Token and refresh token in cookie
         this.cookie.set('accessToken', data.accessToken);
         this.cookie.set('refreshToken', data.refreshToken);
-
+        this.cookie.set('UID',data.UID);
         if (userinfo.rememberme === true) {
           this.cookie.set('username', userinfo.username);
           this.cookie.set('rememberme', userinfo.rememberme);
