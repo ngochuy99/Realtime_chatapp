@@ -5,14 +5,14 @@ import { CreateRoomDialogComponent } from 'src/app/Modals/create-room-dialog/cre
 import { CookieService } from 'ngx-cookie-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { JoinRoomDialogComponent } from 'src/app/Modals/join-room-dialog/join-room-dialog.component';
-
+import { RoomApiService } from '../../services/room-api.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  constructor(private _snack:MatSnackBar,private socketService:SocketioService,public dialog: MatDialog, private cookie:CookieService) { }
+  constructor(private room_service:RoomApiService,private _snack:MatSnackBar,private socketService:SocketioService,public dialog: MatDialog, private cookie:CookieService) { }
   room:string;
   ngOnInit() {
     this.socketService.setupSocketConnection();
@@ -37,5 +37,17 @@ export class ChatComponent implements OnInit {
           })
         })
     })
+  }
+  Join_Room(){
+    this.room_service.get_room_list().subscribe((room_data:any)=>{
+      const diaglogRef = this.dialog.open(JoinRoomDialogComponent,{
+        width:'300px',
+        data:{
+          name:this.cookie.get('username'),
+          roomlist:room_data.roomlist
+        }
+      });
+    });
+
   }
 }
