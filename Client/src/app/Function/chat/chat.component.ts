@@ -14,6 +14,7 @@ import { RoomApiService } from '../../services/room-api.service';
 export class ChatComponent implements OnInit {
   constructor(private room_service:RoomApiService,private _snack:MatSnackBar,private socketService:SocketioService,public dialog: MatDialog, private cookie:CookieService) { }
   room:string;
+  room_name:string;
   ngOnInit() {
     this.socketService.setupSocketConnection();
   }
@@ -51,12 +52,16 @@ export class ChatComponent implements OnInit {
         this.socketService.join_room(room_info.room,room_info.password,this.cookie.get('UID'));
         this.socketService.socket.on('join_success',()=>{
           this._snack.open('Vào phòng thành công','close',{
-            duration:3000
+            duration:2000
+          });
+          this.room_name=room_info.room;
+          this.room_service.get_attendance(room_info.room).subscribe((user_list:any)=>{
+            console.log(user_list);
           })
         })
         this.socketService.socket.on('wrong_room_pass',()=>{
           this._snack.open('Sai tên phòng hoặc mật khẩu  ','close',{
-            duration:3000
+            duration:2000
           })
         })
       });
