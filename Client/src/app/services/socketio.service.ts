@@ -14,4 +14,7 @@ export class SocketioService {
   create_room(room:string,password:string,uid){ //Create new room
     this.socket.emit('create_room',room,password,uid);
   }
+  join_room(room:string,password:string,uid){
+    this.socket.emit('join_room',room,password,uid);
+  }
 }

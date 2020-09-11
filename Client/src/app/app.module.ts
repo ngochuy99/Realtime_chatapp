@@ -29,6 +29,7 @@ import { MatFormFieldModule} from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { JoinRoomDialogComponent } from './Modals/join-room-dialog/join-room-dialog.component';
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +60,8 @@ import { JoinRoomDialogComponent } from './Modals/join-room-dialog/join-room-dia
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSelectModule
   ],
   entryComponents: [CreateRoomDialogComponent,JoinRoomDialogComponent],
   providers: [ CookieService,

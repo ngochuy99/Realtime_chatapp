@@ -23,8 +23,8 @@ const routes: Routes = [
     children:[
       {path:'homepage',component:HomepageComponent},
       {path:'service/chat',component:ChatComponent}
-    ]
-    // canActivate: [AuthGuardService]
+    ],
+    canActivate: [AuthGuardService]
   },
 ];
 

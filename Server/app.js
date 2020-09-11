@@ -6,6 +6,7 @@ var logger = require('morgan');
 require('dotenv').config();
 var cors = require('cors'); 
 var UserApi = require('./routes/users');
+var RoomApi = require('./routes/room');
 var db=require('./models/index.js');
 var Authenticate = require('./middleware/Authen/Auth');
 var app = express();
@@ -33,7 +34,7 @@ app.use('/users', UserApi);
 
 app.use(Authenticate.checkAuth);  //All route below are protected by accesstoken
 
-
+app.use('/room', RoomApi);
 db.sequelize.sync().then(async function(){
     console.log('model sync process finished');
 })

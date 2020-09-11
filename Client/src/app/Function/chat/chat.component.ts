@@ -26,7 +26,7 @@ export class ChatComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result:any)=>{
         this.socketService.create_room(result.room,result.password,this.cookie.get('UID'));
-        this.socketService.socket.on('join_success',()=>{
+        this.socketService.socket.on('create_success',()=>{
           this._snack.open('Tạo phòng thành công','close',{
             duration:3000
           })
@@ -39,13 +39,26 @@ export class ChatComponent implements OnInit {
     })
   }
   Join_Room(){
-    this.room_service.get_room_list().subscribe((room_data:any)=>{
+    this.room_service.get_room_list().subscribe((room_data:any)=>{ //get room name list from backend
       const diaglogRef = this.dialog.open(JoinRoomDialogComponent,{
         width:'300px',
         data:{
           name:this.cookie.get('username'),
-          roomlist:room_data.roomlist
+          roomlist:room_data.roomlist     //pass the list to dialog
         }
+      });
+      diaglogRef.afterClosed().subscribe((room_info:any)=>{ //Info of the room user want to join
+        this.socketService.join_room(room_info.room,room_info.password,this.cookie.get('UID'));
+        this.socketService.socket.on('join_success',()=>{
+          this._snack.open('Vào phòng thành công','close',{
+            duration:3000
+          })
+        })
+        this.socketService.socket.on('wrong_room_pass',()=>{
+          this._snack.open('Sai tên phòng hoặc mật khẩu  ','close',{
+            duration:3000
+          })
+        })
       });
     });
 

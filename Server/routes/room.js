@@ -5,6 +5,7 @@ var db = require('../models/index');
 
 router.get('/listroom',async function(req,res){
     try {
+        console.log(req);
       var roomlist = await GetRoomList();  
       res.status(200).json({
           roomlist:roomlist

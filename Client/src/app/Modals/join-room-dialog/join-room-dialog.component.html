@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Hi {{data.username}}</h1>
+<form [formGroup]="JoinForm">
+<div mat-dialog-content>
+    <mat-form-field appearance="fill">
+        <mat-label>Tên phòng</mat-label>
+        <mat-select formControlName="room">
+            <mat-option *ngFor="let room of data.roomlist" [value]="room.name" >
+            {{room.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Nhập mật khẩu</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button [disabled]="JoinForm.invalid" mat-button (click)="Submit()">Vào phòng</button>
+    <button mat-button (click)="Exit()">Không vào nữa!</button>
+</div>
+</form>
