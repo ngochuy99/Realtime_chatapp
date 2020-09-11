@@ -12,4 +12,7 @@ export class RoomApiService {
   get_room_list(){
     return this.http.get(environment.root_url + '/room/listroom',{headers:{'token':this.cookie.get('accessToken')}});
   }
+  get_attendance(room_name){
+    return this.http.post(environment.root_url + '/room/attendances',{room_name:room_name},{headers:{'token':this.cookie.get('accessToken')}});
+  }
 }
