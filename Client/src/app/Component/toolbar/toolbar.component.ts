@@ -17,8 +17,9 @@ export class ToolbarComponent implements OnInit {
   returnHomepage(){
     this.router.navigate(['homepage']);
   }
-  signout(){
-    this.cookie.deleteAll();
+  async signout(){
+    await this.cookie.deleteAll();
     this.router.navigate(['user/login']);
+    
   }
 }
