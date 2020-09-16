@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   private email: FormControl;
 
   constructor(private fb: FormBuilder, private userapi: UserApiService, private _snackbar : MatSnackBar,private router:Router) {
-    this.username = new FormControl('', [Validators.required]);
+    this.username = new FormControl('', [Validators.required,Validators.pattern('^[a-zA-Z0-9!@#$%^&*()]+$')]);
     this.password = new FormControl('', [Validators.required]);
     this.repassword = new FormControl('', [Validators.required]);
     this.email = new FormControl('', [Validators.required]);
@@ -43,14 +43,14 @@ export class RegisterComponent implements OnInit {
     const registerinfo = this.RegisterForm.value;
     this.userapi.register(registerinfo).subscribe((data:any)=>{
       if(data.message==="success"){
-        this._snackbar.open("Register success","close",{
+        this._snackbar.open("Đăng ký thành công","close",{
           duration:2000,
         }).afterDismissed().subscribe(() => {
           this.router.navigate(['/user/login']);
         });
       }
       else{
-        this._snackbar.open("Register Failed","Confirm",{
+        this._snackbar.open("Tên tài khoản đã tồn tại","Confirm",{
           duration:2000
         })
       }

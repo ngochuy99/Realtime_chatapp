@@ -53,6 +53,9 @@
           <div class="error-messages">
               <div class="error-message alert alert-danger" *ngIf="RegisterForm.hasError('notSame') ">
                 Mật khẩu không khớp
+			  </div>
+			  <div class="error-message alert alert-danger" *ngIf="username.errors?.pattern ">
+                Tài khoản không hợp lệ
               </div>
           </div>
 					<div class="form-group">
