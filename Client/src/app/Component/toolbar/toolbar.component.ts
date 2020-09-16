@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -9,11 +10,15 @@ import { Router } from '@angular/router';
 export class ToolbarComponent implements OnInit {
 
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,private cookie:CookieService) { }
 
   ngOnInit() {
   }
   returnHomepage(){
     this.router.navigate(['homepage']);
+  }
+  signout(){
+    this.cookie.deleteAll();
+    this.router.navigate(['user/login']);
   }
 }
