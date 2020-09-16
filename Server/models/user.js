@@ -13,7 +13,8 @@ module.exports=function(sequelize,Sequelize){
         },
         Username:{
             type:DataTypes.STRING,
-            allowNull:false
+            allowNull:false,
+            unique:true
         },
         Password:{
             type:DataTypes.STRING,

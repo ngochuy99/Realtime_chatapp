@@ -1,5 +1,6 @@
 var db = require('../../models/index');
 var hash = require('sha1');
+var room_middleware = require('../../middleware/room');
 const { Op } = require("sequelize");
 exports = module.exports = async function(io){
     io.on('connection',(socket)=>{
@@ -7,8 +8,10 @@ exports = module.exports = async function(io){
             try{
                 var Foundroom=await CreateRoom(room,password,UID);
                 await JoinRoom(UID,Foundroom);
-                socket.join(room);
-                socket.emit('create_success');
+                await socket.join(room);
+                await socket.emit('create_success');
+                var att_list = await room_middleware.GetAttendances(room);
+                io.in(room).emit('update_attendance',att_list);
             }
             catch(error){
                 socket.emit('alr_exist');
@@ -19,8 +22,10 @@ exports = module.exports = async function(io){
             try{
                 var Foundroom = await FindRoom(room,password);
                 await JoinRoom(UID,Foundroom)
-                socket.join(room);
-                socket.emit('join_success');
+                await socket.join(room);
+                await socket.emit('join_success');
+                var att_list = await room_middleware.GetAttendances(room);
+                io.in(room).emit('update_attendance',att_list)
             }
             catch(err){
                 socket.emit('wrong_room_pass');
@@ -42,7 +47,7 @@ let JoinRoom = async function(UID,room){
             ID:UID
         }
     });
-    user.setRoom(room.ID);
+    await user.setRoom(room.ID);
 }
 let FindRoom = async function(roomname,password){
     try{

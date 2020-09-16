@@ -15,8 +15,12 @@ export class ChatComponent implements OnInit {
   constructor(private room_service:RoomApiService,private _snack:MatSnackBar,private socketService:SocketioService,public dialog: MatDialog, private cookie:CookieService) { }
   room:string;
   room_name:string;
+  private attendance;
   ngOnInit() {
-    this.socketService.setupSocketConnection();
+    // this.socketService.setupSocketConnection();
+    this.socketService.UpdateAttendance().subscribe((data:any)=>{
+      this.attendance=data;
+    })
   }
   Create_room():void{
     const dialogRef = this.dialog.open(CreateRoomDialogComponent,{
@@ -28,16 +32,20 @@ export class ChatComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result:any)=>{
         this.socketService.create_room(result.room,result.password,this.cookie.get('UID'));
         this.socketService.socket.on('create_success',()=>{
+          this.room_name=result.room;
           this._snack.open('Tạo phòng thành công','close',{
             duration:3000
-          })
+          });
         })
         this.socketService.socket.on('alr_exist',()=>{
           this._snack.open('Phòng đã tồn tại ','close',{
             duration:3000
           })
         })
-    })
+        // this.socketService.socket.on('update_attendance',(data:any)=>{
+        //  this.attendance = data;
+        // })
+    });
   }
   Join_Room(){
     this.room_service.get_room_list().subscribe((room_data:any)=>{ //get room name list from backend
@@ -55,17 +63,16 @@ export class ChatComponent implements OnInit {
             duration:2000
           });
           this.room_name=room_info.room;
-          this.room_service.get_attendance(room_info.room).subscribe((user_list:any)=>{
-            console.log(user_list);
-          })
         })
         this.socketService.socket.on('wrong_room_pass',()=>{
           this._snack.open('Sai tên phòng hoặc mật khẩu  ','close',{
             duration:2000
           })
         })
+        // this.socketService.socket.on('update_attendance',(data:any)=>{
+        //   this.attendance = data;
+        // })
       });
     });
-
   }
 }
