@@ -46,8 +46,8 @@ export class LoginComponent implements OnInit {
           this.cookie.delete('rememberme');
         }
         this.UaPCheck = true;
-        this._snackbar.open("Login success","Close",{
-          duration:3000
+        this._snackbar.open("Đăng nhập thành công","Xác nhận",{
+          duration:1500
         }).afterDismissed().subscribe(()=>{
           this.router.navigate(['/homepage']);
         })
